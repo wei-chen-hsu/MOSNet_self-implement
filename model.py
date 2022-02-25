@@ -11,12 +11,13 @@ class CNN_BLSTM(object):
         print('CNN_BLSTM init')
         
     def build(self):
-        _input = keras.Input(shape=(None, 257))
+        _input = keras.Input(shape=(None, 257)) # None for the shape that is not known
         
-        re_input = layers.Reshape((-1, 257, 1), input_shape=(-1, 257))(_input)
+        re_input = layers.Reshape((-1, 257, 1), input_shape=(-1, 257))(_input) # the -1 dimension stands for the rest of the number.
+                                                                               # e.g. (6, 2) -> layers.Reshape((-1, 2, 2)) -> (3, 2, 2)
         
         # CNN
-        conv1 = (Conv2D(16, (3,3), strides=(1, 1), activation='relu', padding='same'))(re_input)
+        conv1 = (Conv2D(filters=16, kernel_size=(3,3), strides=(1, 1), activation='relu', padding='same'))(re_input)
         conv1 = (Conv2D(16, (3,3), strides=(1, 1), activation='relu', padding='same'))(conv1)
         conv1 = (Conv2D(16, (3,3), strides=(1, 3), activation='relu', padding='same'))(conv1)
         
